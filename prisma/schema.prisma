@@ -52,3 +52,9 @@ model Users {
   restaurantId Int?
   Restaurants  Restaurants? @relation(fields: [restaurantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Users_fk0")
 }
+
+model session {
+  id        Int    @id @default(autoincrement())
+  usertoken String @db.VarChar(255)
+  userid    Int
+}
