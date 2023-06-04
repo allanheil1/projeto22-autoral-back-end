@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import {conflictError} from "@/errors";
+import errorsList from '@/errors/errors';
 import { ObjectSchema } from 'joi';
 
 export function validateSchema(schema: ObjectSchema) {
@@ -7,7 +7,7 @@ export function validateSchema(schema: ObjectSchema) {
     const { error } = schema.validate(req.body, { abortEarly: false });
     if (error) {
       const errors = error.details.map((detail) => detail.message);
-      throw conflictError(errors);
+      throw errorsList.conflictError(errors);
     }
 
     next();

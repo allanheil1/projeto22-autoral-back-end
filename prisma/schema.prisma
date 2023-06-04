@@ -48,8 +48,8 @@ model Users {
   name         String       @db.VarChar
   login        String       @unique @db.VarChar
   password     String       @db.VarChar
-  profile      String       @db.VarChar
   restaurantId Int?
+  isadm        Boolean?
   Restaurants  Restaurants? @relation(fields: [restaurantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Users_fk0")
 }
 

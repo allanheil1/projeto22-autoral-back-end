@@ -1,19 +1,26 @@
-export function conflictError(message: string[]) {
+function conflictError(message: string[]) {
 return {
     name: "ConflictError",
     message,
 };
 }
 
+function duplicatedLoginError() {
+return {
+    name: 'DuplicatedLoginError',
+    message: 'There is already an user with given login',
+};
+}
+  
 
-export function unauthorizedError() {
+function unauthorizedError() {
 return {
     name: "UnauthorizedError",
     message: "You must be signed in to continue",
 };
 }
 
-export function notFoundError() {
+function notFoundError() {
 return {
     name: "NotFoundError",
     message: "No result for this search!",
@@ -21,16 +28,27 @@ return {
 }
 
 
-export function notAllowed() {
+function notAllowed() {
 return {
     name: "NotAllowed",
     message: "You are not allowed to access this!",
 };
 }
 
-export function invalidCredentialsError() {
+function invalidCredentialsError() {
 return {
     name: "InvalidCredentialsError",
     message: "Incorrect email or password",
 };
 }
+
+const errors = {
+    conflictError,
+    unauthorizedError,
+    notFoundError,
+    duplicatedLoginError,
+    notAllowed,
+    invalidCredentialsError,
+}
+
+export default errors;
