@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import {unauthorizedError} from '@/errors';
-import userRepositories from "../repositories/userRepositories.js";
+import userRepositories from "../repositories/userRepository.js";
 
 async function authValidation(req: Request, res: Response, next: NextFunction) {
   const { authorization } = req.headers;
