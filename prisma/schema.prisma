@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Menu {
+  id           Int          @id(map: "Menu_pk") @default(autoincrement())
+  restaurantId Int
+  name         String       @db.VarChar
+  price        Decimal      @db.Decimal
+  category     String       @db.VarChar
+  Restaurants  Restaurants  @relation(fields: [restaurantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Menu_fk0")
+  OrderItems   OrderItems[]
+}
+
+model OrderItems {
+  id      Int    @id(map: "OrderItems_pk") @default(autoincrement())
+  MenuId  Int
+  TableId Int
+  Menu    Menu   @relation(fields: [MenuId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "OrderItems_fk0")
+  Tables  Tables @relation(fields: [TableId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "OrderItems_fk1")
+}
+
+model Restaurants {
+  id     Int      @id(map: "Restaurants_pk") @default(autoincrement())
+  name   String   @db.VarChar
+  tables Int      @default(0)
+  Menu   Menu[]
+  Tables Tables[]
+  Users  Users[]
+}
+
+model Tables {
+  id           Int          @id(map: "Tables_pk") @default(autoincrement())
+  restaurantId Int
+  status       String       @db.VarChar
+  tableNumber  Int
+  OrderItems   OrderItems[]
+  Restaurants  Restaurants  @relation(fields: [restaurantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Tables_fk0")
+}
+
+model Users {
+  id           Int          @id(map: "Users_pk") @default(autoincrement())
+  name         String       @db.VarChar
+  login        String       @unique @db.VarChar
+  password     String       @db.VarChar
+  profile      String       @db.VarChar
+  restaurantId Int?
+  Restaurants  Restaurants? @relation(fields: [restaurantId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Users_fk0")
+}
