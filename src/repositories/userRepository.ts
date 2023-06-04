@@ -4,7 +4,12 @@ import { Users } from '@prisma/client';
 
 async function create(newUser: SignUpBody){
     return prisma.users.create({
-        data: newUser,
+        data: {
+            isadm: newUser.isAdm,
+            name: newUser.name,
+            login: newUser.login,
+            password: newUser.password,
+        },
     })
 }
 
