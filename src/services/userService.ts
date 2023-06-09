@@ -31,8 +31,6 @@ async function signIn(userToLog: SignInBody) {
   }
 }
 
-////////
-
 async function createSession(userId: number){
   const usertoken = jwt.sign({userId}, process.env.JWT_SECRET);
   await sessionRepository.create(userId, usertoken);
@@ -48,7 +46,7 @@ async function validateUniqueLogin(login: string) {
 
 const userService = {
     create,
-    signIn
+    signIn,
 }
 
 export default userService;

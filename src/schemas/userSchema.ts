@@ -1,9 +1,14 @@
 import joi from "joi";
 
-export const userSchema = joi.object({
+export const userSignUpSchema = joi.object({
   isAdm: joi.bool().required(),
-  login: joi.string().min(2).required(),
+  login: joi.string().min(4).required(),
   name: joi.string().required(),
   password: joi.string().required(),
   code: joi.string().length(6),
+});
+
+export const userSignInSchema = joi.object({
+  login: joi.string().min(4).required(),
+  password: joi.string().required(),
 });

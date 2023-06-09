@@ -9,7 +9,6 @@ export function validateSchema(schema: ObjectSchema) {
       const errors = error.details.map((detail) => detail.message);
       throw errorsList.conflictError(errors);
     }
-
     next();
   };
 }
