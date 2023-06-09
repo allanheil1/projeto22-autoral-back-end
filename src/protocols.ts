@@ -7,6 +7,11 @@ export type SignUpBody = {
   login: string,
   name: string,
   password: string,
-  code: string,
+  code?: string,
   isAdm: boolean,
+}
+
+export type SignInBody = {
+  login: string,
+  password: string,
 }

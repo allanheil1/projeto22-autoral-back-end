@@ -14,8 +14,12 @@ async function create(newUser: SignUpBody){
 }
 
 
-async function findById(){
-
+async function findById(userId: number){
+    return prisma.users.findUnique({
+        where: {
+            id: userId,
+        }
+    });
 }
 
 async function findByLogin(login: string): Promise<Users>{
@@ -26,9 +30,30 @@ async function findByLogin(login: string): Promise<Users>{
     });
 }
 
+async function findAllByRestaurantId(restaurantId: number){
+    return prisma.users.findMany({
+        where: {
+            restaurantId
+        }
+    })
+}
+
+async function updateRestaurantId(userId: number, restaurantId: number){
+    return prisma.users.update({
+        where: {
+            id: userId,
+        },
+        data: {
+            restaurantId: restaurantId,
+        }
+    })
+}
+
 const userRepository = {
     create,
+    updateRestaurantId,
     findById,
+    findAllByRestaurantId,
     findByLogin,
 }
 

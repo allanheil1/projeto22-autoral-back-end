@@ -5,5 +5,5 @@ export const userSchema = joi.object({
   login: joi.string().min(2).required(),
   name: joi.string().required(),
   password: joi.string().required(),
-  code: joi.string().required().length(6),
+  code: joi.string().length(6),
 });

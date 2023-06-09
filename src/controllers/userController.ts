@@ -1,7 +1,7 @@
 import userService from '@/services/userService';
 import httpStatus from 'http-status';
 import { Request, Response, NextFunction } from 'express';
-import { SignUpBody } from '@/protocols';
+import { SignInBody, SignUpBody } from '@/protocols';
 
 async function create(req: Request, res: Response, next: NextFunction) {
 
@@ -16,6 +16,15 @@ async function create(req: Request, res: Response, next: NextFunction) {
 }
 
 async function signin(req: Request, res: Response, next: NextFunction) {
+
+  const userToLog = req.body as SignInBody;
+
+  try{
+    const logInfo = await userService.signIn(userToLog);
+    return res.status(httpStatus.OK).send(logInfo);
+  } catch (err) {
+    next(err);
+  }
 
 }
 

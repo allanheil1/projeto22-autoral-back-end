@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
-import userRepository from '@/repositories/userRepository';
+import jwt from 'jsonwebtoken';
 import errors from '@/errors/errors';
-import { SignUpBody } from '@/protocols';
+import { SignInBody, SignUpBody } from '@/protocols';
+import userRepository from '@/repositories/userRepository';
+import sessionRepository from '@/repositories/sessionRepository';
 
 async function create(newUser: SignUpBody) {
   await validateUniqueLogin(newUser.login);
@@ -12,6 +14,31 @@ async function create(newUser: SignUpBody) {
   });
 }
 
+async function signIn(userToLog: SignInBody) {
+  const user = await userRepository.findByLogin(userToLog.login);
+  if(!user) throw errors.invalidCredentialsError();
+
+  const isPasswordCorrect = await bcrypt.compare(userToLog.password, user.password);
+  if(!isPasswordCorrect) throw errors.invalidCredentialsError();
+
+  const usertoken = createSession(user.id);
+  const response = {
+    userName: user.name,
+    usertoken: usertoken,
+  }
+  return{
+    response
+  }
+}
+
+////////
+
+async function createSession(userId: number){
+  const usertoken = jwt.sign({userId}, process.env.JWT_SECRET);
+  await sessionRepository.create(userId, usertoken);
+  return usertoken;
+}
+
 async function validateUniqueLogin(login: string) {
   const userWithSameLogin = await userRepository.findByLogin(login);
   if (userWithSameLogin) {
@@ -19,13 +46,9 @@ async function validateUniqueLogin(login: string) {
   }
 }
 
-async function signin() {
-
-}
-
 const userService = {
     create,
-    signin
+    signIn
 }
 
 export default userService;
