@@ -21,6 +21,7 @@ async function signin(req: Request, res: Response, next: NextFunction) {
 
   try{
     const logInfo = await userService.signIn(userToLog);
+    console.log(logInfo);
     return res.status(httpStatus.OK).send(logInfo);
   } catch (err) {
     next(err);

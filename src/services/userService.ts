@@ -34,9 +34,9 @@ async function signIn(userToLog: SignInBody) {
   const isPasswordCorrect = await bcrypt.compare(userToLog.password, user.password);
   if(!isPasswordCorrect) throw errors.invalidCredentialsError();
 
-  const usertoken = createSession(user.id);
+  const usertoken = await createSession(user.id);
   const response = {
-    userName: user.name,
+    user: user,
     usertoken: usertoken,
   }
   return{
