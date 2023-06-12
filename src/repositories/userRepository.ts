@@ -9,6 +9,7 @@ async function create(newUser: SignUpBody){
             name: newUser.name,
             login: newUser.login,
             password: newUser.password,
+            restaurantId: newUser.restaurantId,
         },
     });
 }

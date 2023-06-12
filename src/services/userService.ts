@@ -4,14 +4,27 @@ import errors from '@/errors/errors';
 import { SignInBody, SignUpBody } from '@/protocols';
 import userRepository from '@/repositories/userRepository';
 import sessionRepository from '@/repositories/sessionRepository';
+import restaurantRepository from '@/repositories/restaurantRepository';
 
 async function create(newUser: SignUpBody) {
+
   await validateUniqueLogin(newUser.login);
   const hashedPassword = await bcrypt.hash(newUser.password, 10);
-  await userRepository.create({
+
+  if(newUser.code){
+    const restaurant = await restaurantRepository.findRestaurantByCode(newUser.code);
+    if(!restaurant) throw errors.notFoundError();
+    await userRepository.create({
       ...newUser,
       password: hashedPassword,
-  });
+      restaurantId: restaurant.id,
+    });
+  }else{
+    await userRepository.create({
+      ...newUser,
+      password: hashedPassword,
+    });
+  }
 }
 
 async function signIn(userToLog: SignInBody) {

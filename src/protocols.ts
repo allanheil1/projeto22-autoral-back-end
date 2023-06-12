@@ -9,6 +9,7 @@ export type SignUpBody = {
   password: string,
   code?: string,
   isAdm: boolean,
+  restaurantId?: number,
 }
 
 export type SignInBody = {
