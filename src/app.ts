@@ -6,7 +6,8 @@ import cors from 'cors';
 import { loadEnv, connectDb, disconnectDB } from './config';
 import { handleApplicationErrors } from '@/middlewares';
 import {
-  userRouter
+  userRouter, 
+  restaurantRouter,
 } from '@/routers';
 
 loadEnv();
@@ -15,6 +16,7 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 app.use('/', userRouter)
+app.use('/', restaurantRouter)
 app.use(handleApplicationErrors);
 
 export function init(): Promise<Express> {

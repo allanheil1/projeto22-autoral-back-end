@@ -15,3 +15,8 @@ export type SignInBody = {
   login: string,
   password: string,
 }
+
+export type NewRestaurantBody = {
+  name: string,
+  tables: number,
+}

@@ -15,7 +15,7 @@ async function create(newUser: SignUpBody) {
 }
 
 async function signIn(userToLog: SignInBody) {
-  const user = await userRepository.findByLogin(userToLog.login);
+  const user = await userRepository.findUserByLogin(userToLog.login);
   if(!user) throw errors.invalidCredentialsError();
 
   const isPasswordCorrect = await bcrypt.compare(userToLog.password, user.password);
@@ -38,10 +38,8 @@ async function createSession(userId: number){
 }
 
 async function validateUniqueLogin(login: string) {
-  const userWithSameLogin = await userRepository.findByLogin(login);
-  if (userWithSameLogin) {
-    throw errors.duplicatedLoginError();
-  }
+  const userWithSameLogin = await userRepository.findUserByLogin(login);
+  if (userWithSameLogin) throw errors.duplicatedLoginError();
 }
 
 const userService = {

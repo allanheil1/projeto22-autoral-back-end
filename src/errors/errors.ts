@@ -11,6 +11,13 @@ return {
     message: 'There is already an user with given login',
 };
 }
+
+function duplicatedNameError() {
+return {
+    name: 'DuplicatedNameError',
+    message: 'There is already a restaurant with given name',
+};
+}
   
 
 function unauthorizedError() {
@@ -47,6 +54,7 @@ const errors = {
     unauthorizedError,
     notFoundError,
     duplicatedLoginError,
+    duplicatedNameError,
     notAllowed,
     invalidCredentialsError,
 }

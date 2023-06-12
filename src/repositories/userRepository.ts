@@ -22,7 +22,7 @@ async function findById(userId: number){
     });
 }
 
-async function findByLogin(login: string): Promise<Users>{
+async function findUserByLogin(login: string): Promise<Users>{
     return prisma.users.findFirst({
         where: {
             login,
@@ -35,7 +35,7 @@ async function findAllByRestaurantId(restaurantId: number){
         where: {
             restaurantId
         }
-    })
+    });
 }
 
 async function updateRestaurantId(userId: number, restaurantId: number){
@@ -46,7 +46,7 @@ async function updateRestaurantId(userId: number, restaurantId: number){
         data: {
             restaurantId: restaurantId,
         }
-    })
+    });
 }
 
 const userRepository = {
@@ -54,7 +54,7 @@ const userRepository = {
     updateRestaurantId,
     findById,
     findAllByRestaurantId,
-    findByLogin,
+    findUserByLogin,
 }
 
 export default userRepository;
