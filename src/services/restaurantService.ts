@@ -1,10 +1,13 @@
 import { NewRestaurantBody } from "@/protocols";
 import errors from '@/errors/errors';
 import restaurantRepository from "@/repositories/restaurantRepository";
+import userRepository from "@/repositories/userRepository";
 
-async function create(newRestaurant: NewRestaurantBody){
+async function create(newRestaurant: NewRestaurantBody, userId: number){
     await validateUniqueName(newRestaurant.name);
-    await restaurantRepository.create(newRestaurant);
+    const createdRestaurant = await restaurantRepository.create(newRestaurant);
+    await userRepository.updateRestaurantId(userId, createdRestaurant.id);
+    return createdRestaurant;
 }
 
 async function validateUniqueName(name: string){

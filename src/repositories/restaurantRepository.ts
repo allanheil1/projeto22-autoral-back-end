@@ -2,7 +2,7 @@ import { prisma } from '@/config';
 import { NewRestaurantBody } from '@/protocols';
 import { Restaurants } from '@prisma/client';
 
-async function create(newRestaurant: NewRestaurantBody){
+async function create(newRestaurant: NewRestaurantBody): Promise<Restaurants>{
     return prisma.restaurants.create({
         data: newRestaurant
     });

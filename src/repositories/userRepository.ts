@@ -10,7 +10,7 @@ async function create(newUser: SignUpBody){
             login: newUser.login,
             password: newUser.password,
         },
-    })
+    });
 }
 
 
