@@ -19,4 +19,6 @@ export type SignInBody = {
 export type NewRestaurantBody = {
   name: string,
   tables: number,
+  photo?: string,
+  code: string,
 }

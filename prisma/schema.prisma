@@ -29,6 +29,8 @@ model Restaurants {
   id     Int      @id(map: "Restaurants_pk") @default(autoincrement())
   name   String   @db.VarChar
   tables Int      @default(0)
+  code   String?  @unique @db.VarChar(255)
+  photo  String?  @db.VarChar(255)
   Menu   Menu[]
   Tables Tables[]
   Users  Users[]
