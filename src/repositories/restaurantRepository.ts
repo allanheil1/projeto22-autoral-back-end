@@ -25,10 +25,19 @@ async function findRestaurantByCode(code: string): Promise<Restaurants>{
     })
 }
 
+async function findRestaurantById(id: number): Promise<Restaurants>{
+    return prisma.restaurants.findFirst({
+        where: {
+            id
+        }
+    })
+}
+
 const restaurantRepository = {
     create,
     findRestaurantByName,
     findRestaurantByCode,
+    findRestaurantById,
 }
 
 export default restaurantRepository;
